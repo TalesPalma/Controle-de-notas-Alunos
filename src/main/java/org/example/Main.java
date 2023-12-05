@@ -2,6 +2,7 @@ package org.example;
 
 
 
+import ConexaoBd.ConnectBD;
 import FormGui.GuiForm;
 
 
