@@ -4,6 +4,7 @@ import ConexaoBd.ConnectBD;
 
 import javax.swing.*;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -27,6 +28,7 @@ public class DTOAluno {
         }catch (SQLException e){
             JOptionPane.showMessageDialog(null,"ERRO AI INSERIR DADOS " + e.getMessage());
         }
+
     }
 
 
@@ -37,10 +39,12 @@ public class DTOAluno {
         ResultSet resultSet=null;
         try {
              resultSet  = statement.executeQuery(sql);
+
         }catch (SQLException e){
             JOptionPane.showMessageDialog(null,"Erro ao fazer consulta de dados "
                     + e.getMessage() );
         }
+
         return resultSet;
     }
 

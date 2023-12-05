@@ -2,6 +2,7 @@ package FormGui;
 
 
 
+import ConexaoBd.ConnectBD;
 import org.example.Aluno.DTOAluno;
 import org.example.Tools;
 
@@ -12,6 +13,9 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 
 public class GuiForm extends JFrame {
 
@@ -103,12 +107,34 @@ public class GuiForm extends JFrame {
       defaultTableModel.addColumn("Nota");
       defaultTableModel.addColumn("Estado");
 
-//        Object[] object = {"tales",20,1,false};
+//
+
+        DTOAluno dtoAluno = new DTOAluno();
+        ResultSet resultSet = dtoAluno.selectDates();
+
+      try{
+          ResultSetMetaData metaData = resultSet.getMetaData();
+          while(resultSet.next()){
+              Object[] object = new Object[4];
+              int cont=0;
+                for(int i=2;i<=metaData.getColumnCount();i++){
+                    object[cont]=resultSet.getString(i);
+                    cont++;
+                }
+
+                if(object[3].equals("1")){
+                    object[3]="Aprovado";
+                }else{
+                    object[3]="Reprovado";
+                }
+              defaultTableModel.addRow(object);
+          }
+
+      }catch (SQLException e){
+          JOptionPane.showMessageDialog(null,"ERRO COM RESULT SET" + e.getMessage());
+      }
+
         TableConsult.setModel(defaultTableModel);
-
-
-
-
     }
 
 

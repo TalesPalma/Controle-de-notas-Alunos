@@ -29,6 +29,12 @@ public class ConnectBD {
         return statement;
     }
 
-
+    public void closeDB(){
+        try {
+            connection.close();
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
 
 }
