@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Vector;
 
 public class GuiForm extends JFrame {
 
@@ -33,6 +34,7 @@ public class GuiForm extends JFrame {
     private JTextField textFieldNota;
     private JButton salvarButton;
     private JTable TableConsult;
+    private JList listaReprovados;
 
 
     public GuiForm() {
@@ -41,7 +43,7 @@ public class GuiForm extends JFrame {
         InserirTela.setVisible(false);
         ConsultarTela.setVisible(false);
         setTabela();
-
+        retornoNotification();
 
         inserirButton.addActionListener(new ActionListener() {
             @Override
@@ -58,10 +60,12 @@ public class GuiForm extends JFrame {
 
         voltarButton.addActionListener(v->{
             Tools.voltarInicioPara(contentPane,Home);
+            retornoNotification();
         });
 
         voltar2Button.addActionListener(v->{
             Tools.voltarInicioPara(contentPane,Home);
+            retornoNotification();
         });
 
 
@@ -155,7 +159,32 @@ public class GuiForm extends JFrame {
         TableConsult.setModel(defaultTableModel);
     }
 
+    private void retornoNotification(){
+        DTOAluno dtoAluno = new DTOAluno();
+        ResultSet resultSet = dtoAluno.selectDates();
+        Vector<String>todoReprovado= new Vector<>();
+        try {
+            while(resultSet.next()){
+                String nomeAluno = resultSet.getString(2);
+                String estado = resultSet.getString(5);
+                
+                if(estado.equals("0")){
+                    todoReprovado.add(nomeAluno + " ");
+                }
+                
+                
+                
+            }
+        }catch (SQLException ex){
+            JOptionPane.showMessageDialog(null,"ERROR NA CONEXAO DB " + ex.getMessage());
+        }
 
+        DefaultListModel<String> listModel=new DefaultListModel<>();
+    for(int i=0;i<todoReprovado.size();i++){
+        listModel.addElement(todoReprovado.get(i));
+    }
+        listaReprovados.setModel(listModel);
+    }
 
 
 }
