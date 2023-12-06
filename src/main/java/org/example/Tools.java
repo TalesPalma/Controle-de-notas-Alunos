@@ -22,7 +22,7 @@ public class Tools {
 
     public static  void setarFrame(JFrame frame,JPanel Home){
         frame.add(Home);
-        frame.setSize(400,500);
+        frame.setSize(500,500);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
